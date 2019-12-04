@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+
+
+
+import './quiz.dart';
+import './result.dart';
+
+void main() => runApp(MyApp());
+ 
+
+  class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState(){
+    return _MyAppState();
+  }
+  }
+  class _MyAppState extends State<MyApp> {   
+   final _questions = const [
+        {
+          'questionText': 'Who is the leading wicket taker of 2019 CWC?', 
+        'answer': [{'text': 'BOULT', 'score':5},{'text': 'ARCHER' , 'score':5} ,{'text': 'STARC' , 'score':0},{'text': 'AFRIDI' ,'score':5},],},
+      {  
+        'questionText': 'Leading run scorer of 2019 CWC?',
+      'answer': [{'text': 'WARNER', 'score':5},{'text': 'SHAKIB', 'score':5},{'text': 'ROHIT', 'score':0},{'text': 'KANE WILLIAMSON', 'score':5},],},
+      {
+          'questionText': 'Most centuries scored by a player in single world cup edition?', 
+        'answer': [ {'text': '6', 'score':5},{'text': '5', 'score':0},{'text': '4', 'score':5},{'text': '2', 'score':5},],},
+      
+      ];
+   
+    var _questionIndex = 0;
+    var _totalScore = 0;
+
+    void _resetQuiz() {
+      setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+    }
+    void _answerQuestion(int score) {
+      _totalScore +=  score;
+      if(_questionIndex < _questions.length) {
+      }
+      setState(() {
+       _questionIndex = _questionIndex + 1; 
+      });
+    
+      print(_questionIndex);
+      if(_questionIndex < _questions.length) {
+        print('We have  more questions!');
+    } else {
+      print('We have no more questions!');
+    }
+    }
+    @override
+    Widget build(BuildContext context) {
+      
+      return MaterialApp(
+        home: Scaffold(
+        appBar: AppBar(  
+        title: Text('My First App'),),
+      body: _questionIndex < _questions.length 
+      ? Quiz
+      (answerQuestion: _answerQuestion,
+       questionIndex: _questionIndex,
+       questions: _questions ,
+       )
+       : Result(_totalScore, _resetQuiz), 
+      ),
+      );
+    }
+  }
